@@ -1,0 +1,197 @@
+INSERT INTO people (last_name, first_name, mobile, birthday)
+VALUES ('Smith', 'John', '230-4293', '1973-01-23');
+
+UPDATE people
+SET first_name = 'Tony'
+WHERE id = 1;
+
+UPDATE people
+SET mobile = '152-9854'
+WHERE last_name = 'Smith';
+
+UPDATE people SET birthday = '1955-01-25'
+WHERE last_name = 'Smith'
+AND id = 4;
+
+UPDATE people
+SET mobile = '333-3333', last_name = 'Johnson'
+WHERE first_name = 'Noelle'
+OR first_name = 'Raj';
+
+SELECT COUNT(homenumber)
+FROM homes;
+
+SELECT homenumber
+FROM homes
+WHERE id = 1;
+
+SELECT COUNT(*)
+FROM homes;
+
+SELECT COUNT(DISTINCT last_name)
+FROM people;
+
+SELECT  SUM(id), AVG(id)
+FROM people;
+
+SELECT SUM(id) AS sum, AVG(id) AS avg
+FROM people;
+
+SELECT MIN(birthday)
+FROM people;
+
+SELECT UPPER (first_name), LOWER(last_name)
+FROM people;
+
+SELECT REPLACE(last_name, 'a', '1')
+FROM people;
+
+SELECT last_name
+FROM people;
+
+INSERT INTO people (first_name, last_name, mobile)
+VALUES ('Otto', 'Von Count', '656-6548');
+
+SELECT CONCAT(first_name, last_name)
+FROM people
+WHERE last_name = 'Smith';
+
+SELECT CONCAT(first_name, ' ', last_name)
+FROM people
+WHERE last_name = 'Smith';
+
+SELECT CONCAT_WS(' ',first_name, last_name, mobile)
+FROM people
+WHERE last_name= 'Smith';
+
+SELECT homenumber, LEFT(homenumber, 3), RIGHT(homenumber, 2)
+FROM homes;
+
+SELECT LENGTH(address), CHAR_LENGTH(address)
+FROM homes;
+
+SELECT first_name, last_name, YEAR(birthday)
+FROM people
+WHERE birthday >= '1970-07-06'
+AND birthday<='1987-07-06';
+
+SELECT first_name, birthday
+FROM people
+WHERE first_name='Thomas'
+OR first_name='Raj'
+OR first_name='Sheeri';
+
+SELECT first_name, birthday
+FROM people
+WHERE first_name
+IN ('Noelle', 'Thomas', 'Raj');
+
+SELECT first_name
+FROM people
+WHERE RIGHT(first_name,1)='e';
+
+SELECT first_name
+FROM people
+WHERE first_name
+LIKE '%j';
+
+SELECT first_name
+FROM people
+WHERE first_name
+LIKE '%o%';
+
+SELECT first_name
+FROM people
+WHERE first_name
+NOT LIKE '%o%';
+
+SELECT COUNT(*)
+FROM people;
+
+SELECT last_name, COUNT(*)
+FROM people
+GROUP BY last_name;
+
+SELECT last_name, GROUP_CONCAT(mobile)
+FROM people
+GROUP BY last_name;
+
+SELECT last_name, GROUP_CONCAT(mobile SEPARATOR ' and ')
+FROM people
+GROUP BY last_name;
+
+SELECT last_name, GROUP_CONCAT(mobile SEPARATOR ' and ')
+FROM people
+GROUP BY last_name  HAVING COUNT(*)>1;
+
+SELECT last_name, GROUP_CONCAT(mobile SEPARATOR ' and ')
+FROM people
+WHERE last_name != 'Cabral'
+GROUP BY last_name  HAVING COUNT(*)>1;
+
+SELECT first_name, birthday
+FROM people
+ORDER BY birthday;
+
+SELECT first_name, birthday
+FROM people
+ORDER BY birthday DESC;
+
+SELECT first_name, last_name
+FROM people
+ORDER BY last_name, first_name;
+
+SELECT first_name, birthday
+FROM people
+ORDER BY birthday DESC LIMIT 3;
+
+SELECT first_name, MONTHNAME(birthday) as mon, birthday
+FROM people
+ORDER BY MONTH(birthday);
+
+SELECT last_name, COUNT(*)
+FROM  people
+GROUP BY last_name;
+
+SELECT last_name, COUNT(*)
+FROM  people
+GROUP BY last_name
+ORDER BY NULL;
+
+INSERT INTO people (first_name, last_name, birthday, home_id)
+VALUES ('John', 'Smith', '1998-04-07', 4),
+('Maya', 'Wasserman' , NULL, 4),
+('Paul', 'Thompson', '1996-05-27', 1);
+
+DELETE FROM people
+WHERE first_name='Maya';
+
+INSERT INTO people (first_name, last_name, birthday)
+VALUES ('Eli', 'Kramer', '1984-01-15');
+
+SELECT p.first_name, h.address
+FROM people p
+INNER JOIN homes h on (p.home_id = h.id);
+
+SELECT first_name, last_name
+FROM people p
+INNER JOIN homes h on (p.home_id = h.id)
+WHERE p.HOME_ID = 1;
+
+SELECT p.*, h.address, h.homenumber
+FROM people p
+INNER JOIN homes h  on (p.home_id = h.id)
+WHERE p.first_name  LIKE '%e%';
+
+
+
+*** Exercise ***
+SELECT CONCAT(p.first_name, ' ', p.last_name) AS full_name, h.address, p.birthday
+FROM people p
+INNER JOIN homes h ON (p.home_id = h.id)
+WHERE birthday IS NOT NULL
+ORDER BY MONTH(birthday)
+
+SELECT p.*, h.*
+FROM people p
+INNER JOIN homes h ON (p.home_id = h.id)
